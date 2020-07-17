@@ -1,0 +1,11 @@
+[package]
+name = "huetest"
+version = "0.1.0"
+authors = ["Owen Synge <osynge@googlemail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+huelib = "0.8.0"
+async-std = {version = "1", features = ["attributes"]}
