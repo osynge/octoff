@@ -2,10 +2,20 @@ use huelib::{bridge, Bridge};
 use std::time::Duration;
 
 use async_std::task;
+use chrono::{DateTime, Local, TimeZone};
 
 fn detected(sensor: &huelib::resource::sensor::Sensor) {
     match sensor.state.presence {
-        Some(_p) => println!("{:?}", sensor),
+        Some(_p) => {
+            println!("{:?}", sensor);
+            match sensor.state.last_updated {
+                Some(foo) => {
+                    let now = Local::now().naive_utc();
+                    println!("{:?}", now.signed_duration_since(foo))
+                }
+                None => {}
+            }
+        }
         None => {}
     }
 }
