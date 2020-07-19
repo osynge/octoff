@@ -11,13 +11,20 @@ fn detected(sensor: &huelib::resource::sensor::Sensor) {
             match sensor.state.last_updated {
                 Some(foo) => {
                     let now = Local::now().naive_utc();
-                    println!("{:?}", now.signed_duration_since(foo))
+                    let dur = now.signed_duration_since(foo);
+                    println!("signed_duration_since:{:?}", dur);
+                    let bing = dur.num_minutes();
+                    println!("mins=:{:?}", bing);
                 }
                 None => {}
             }
         }
         None => {}
     }
+}
+
+fn light(sensor: &huelib::resource::light::Light) {
+    println!("{:?}", sensor)
 }
 
 #[async_std::main]
@@ -37,6 +44,16 @@ async fn main() {
             Ok(p) => p.iter().for_each(|response| detected(response)),
             Err(_) => {}
         }
+/*
+        let lights = bridge.get_all_lights();
+        match lights {
+            Ok(p) =>{
+                p.iter().for_each(|response| light(response))
+            }
+            Err(_) => {}
+        }
+*/
+
         task::sleep(Duration::from_secs(3)).await;
     }
 }
