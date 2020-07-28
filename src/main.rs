@@ -31,8 +31,7 @@ fn rule(sensor: &huelib::resource::Rule) {
     println!("{:?}", sensor)
 }
 
-#[async_std::main]
-async fn main() {
+async fn fred() {
     // Get the IP address of the bridge that was first discovered in the local network.
     let ip_address = bridge::discover()
         .expect("Failed to discover bridges")
@@ -67,4 +66,11 @@ async fn main() {
 
         task::sleep(Duration::from_secs(3)).await;
     }
+}
+
+fn main() {
+    let fut_1 = fred();
+    task::block_on(async {
+        fut_1.await;
+    });
 }
